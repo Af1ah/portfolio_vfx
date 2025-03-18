@@ -362,8 +362,9 @@ export default function HomePage() {
               <h3 className="font-bold mb-4">Contact</h3>
               <address className="not-italic text-muted-foreground">
                 <p>hello@studio.com</p>
-                <p>+1 (555) 123-4567</p>
-                <p>New York, NY</p>
+                <p>+91 98765 43210</p>
+                <p>Malappuram, Kerala</p>
+                <p>India</p>
               </address>
             </div>
           </div>
