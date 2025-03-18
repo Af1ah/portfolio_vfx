@@ -13,6 +13,7 @@ import Model3D from "@/components/model-3d"
 import ParallaxSection from "@/components/parallax-section"
 import CustomLoader from "@/components/custom-loader"
 import ActiveLink from "@/components/active-link"
+import ImageWithFallback from "@/components/image-with-fallback"
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -199,25 +200,49 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((item) => (
+            {[
+              {
+                id: 1,
+                title: "Movie Poster Design",
+                category: "Poster Design",
+                image: "/images/demo-poster-1.jpg",
+                fallbackImage: "https://placehold.co/600x800/1a1a1a/ffffff?text=Movie+Poster"
+              },
+              {
+                id: 2,
+                title: "VFX Showreel",
+                category: "Visual Effects",
+                image: "/images/demo-vfx-1.jpg",
+                fallbackImage: "https://placehold.co/600x800/1a1a1a/ffffff?text=VFX+Showreel"
+              },
+              {
+                id: 3,
+                title: "Brand Campaign",
+                category: "Branding",
+                image: "/images/demo-brand-1.jpg",
+                fallbackImage: "https://placehold.co/600x800/1a1a1a/ffffff?text=Brand+Campaign"
+              }
+            ].map((item) => (
               <motion.div
-                key={item}
+                key={item.id}
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
                 className="group relative overflow-hidden rounded-lg"
               >
                 <div className="aspect-[3/4] bg-muted overflow-hidden">
-                  <img
-                    src={`/placeholder.svg?height=600&width=450`}
-                    alt={`Featured work ${item}`}
+                  <ImageWithFallback
+                    src={item.image}
+                    alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    width={600}
+                    height={800}
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                   <div>
-                    <h3 className="text-xl font-bold mb-2">Project Title {item}</h3>
-                    <p className="text-muted-foreground mb-4">Poster Design / VFX</p>
+                    <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                    <p className="text-muted-foreground mb-4">{item.category}</p>
                     <Button variant="secondary" size="sm" asChild>
-                      <Link href={`/portfolio/project-${item}`}>View Project</Link>
+                      <Link href={`/portfolio/project-${item.id}`}>View Project</Link>
                     </Button>
                   </div>
                 </div>
