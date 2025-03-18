@@ -137,7 +137,11 @@ export default function HomePage() {
       {/* Hero Section with 3D Background */}
       <section className="min-h-screen relative flex items-center pt-20 pb-10">
         <div className="absolute inset-0 z-0">
-          <Canvas>
+          <Canvas
+            camera={{ position: [0, 0, 5], fov: 75 }}
+            gl={{ antialias: true, alpha: true }}
+            dpr={[1, 2]}
+          >
             <Suspense fallback={null}>
               <ErrorBoundary fallback={null}>
                 <PresentationControls
@@ -153,6 +157,7 @@ export default function HomePage() {
                   </Float>
                 </PresentationControls>
                 <Environment preset="city" />
+                <fog attach="fog" args={['#000', 5, 30]} />
               </ErrorBoundary>
             </Suspense>
           </Canvas>
