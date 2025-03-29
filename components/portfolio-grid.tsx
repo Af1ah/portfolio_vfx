@@ -7,6 +7,7 @@ interface Project {
   title: string;
   category: string;
   featured?: boolean;
+  image: string;
 }
 
 interface PortfolioGridProps {
@@ -39,7 +40,7 @@ export default function PortfolioGrid({ filteredProjects }: PortfolioGridProps) 
                 <div className="relative overflow-hidden rounded-lg">
                   <div className="aspect-[4/3] bg-muted overflow-hidden">
                     <img
-                      src={`/placeholder.svg?height=450&width=600`}
+                      src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />

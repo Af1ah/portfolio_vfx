@@ -11,15 +11,69 @@ import CallToAction from "@/components/call-to-action"
 
 // Sample project data
 const projects = [
-  { id: "1", title: "Neon Dreams", category: "posters", featured: true },
-  { id: "2", title: "Cosmic Voyage", category: "vfx", featured: true },
-  { id: "3", title: "Urban Pulse", category: "posters", featured: false },
-  { id: "4", title: "Digital Horizon", category: "motion", featured: true },
-  { id: "5", title: "Ethereal Landscapes", category: "vfx", featured: false },
-  { id: "6", title: "Retro Revival", category: "posters", featured: false },
-  { id: "7", title: "Particle Symphony", category: "motion", featured: false },
-  { id: "8", title: "Cybernetic Dreams", category: "vfx", featured: true },
-  { id: "9", title: "Minimal Expressions", category: "posters", featured: false },
+  { 
+    id: "1", 
+    title: "cultural", 
+    category: "posters", 
+    featured: true,
+    image: "/images/kannan.png"
+  },
+  { 
+    id: "2", 
+    title: "bussiness", 
+    category: "posters", 
+    featured: false,
+    image: "/images/kannan2.jpeg"
+  },
+  { 
+    id: "3", 
+    title: "Car Design", 
+    category: "design", 
+    featured: false,
+    image: "/images/car2.jpg"
+  },
+  { 
+    id: "4", 
+    title: "Kannan VFX 2", 
+    category: "posters", 
+    featured: false,
+    image: "/images/sign2.jpeg"
+  },
+  { 
+    id: "5", 
+    title: "Ethereal Landscapes", 
+    category: "vfx", 
+    featured: false,
+    image: "/placeholder.svg?height=450&width=600"
+  },
+  { 
+    id: "6", 
+    title: "Retro Revival", 
+    category: "posters", 
+    featured: false,
+    image: "/placeholder.svg?height=450&width=600"
+  },
+  { 
+    id: "7", 
+    title: "Particle Symphony", 
+    category: "motion", 
+    featured: false,
+    image: "/placeholder.svg?height=450&width=600"
+  },
+  { 
+    id: "8", 
+    title: "Cybernetic Dreams", 
+    category: "vfx", 
+    featured: true,
+    image: "/placeholder.svg?height=450&width=600"
+  },
+  { 
+    id: "9", 
+    title: "Minimal Expressions", 
+    category: "posters", 
+    featured: false,
+    image: "/placeholder.svg?height=450&width=600"
+  },
 ]
 
 export default function PortfolioPage() {

@@ -69,11 +69,10 @@ export default function HomePage() {
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
       <AnimatedCursor />
 
-      {/* Navigation */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold tracking-tighter">
-            STUDIO<span className="text-primary">.</span>
+            Ecomorph FX<span className="text-primary">.</span>
           </Link>
 
           {/* Replace the navigation links in the header with ActiveLink */}
@@ -321,7 +320,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <Link href="/" className="text-2xl font-bold tracking-tighter mb-4 inline-block">
-                STUDIO<span className="text-primary">.</span>
+                kannan<span className="text-primary">.</span>
               </Link>
               <p className="text-muted-foreground">Creating visual stories through poster design and VFX artistry.</p>
             </div>
@@ -386,8 +385,8 @@ export default function HomePage() {
             <div>
               <h3 className="font-bold mb-4">Contact</h3>
               <address className="not-italic text-muted-foreground">
-                <p>hello@studio.com</p>
-                <p>+91 98765 43210</p>
+                <p>ecomorph10@gmail.com</p>
+                <p>+91 xxxxxxxxxx</p>
                 <p>Malappuram, Kerala</p>
                 <p>India</p>
               </address>
@@ -395,7 +394,7 @@ export default function HomePage() {
           </div>
 
           <div className="border-t border-border mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Studio. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} kannan. All rights reserved.</p>
             <div className="flex space-x-4 mt-4 md:mt-0">
               <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Privacy Policy

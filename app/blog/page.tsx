@@ -67,10 +67,10 @@ export default function BlogPage() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold tracking-tighter">
-            STUDIO<span className="text-primary">.</span>
+          Echomorph FX<span className="text-primary">.</span>
           </Link>
 
-          {/* Desktop Navigation */}
+          
           <div className="hidden md:flex space-x-8">
             <ActiveLink href="/">Home</ActiveLink>
             <ActiveLink href="/portfolio">Portfolio</ActiveLink>
@@ -102,8 +102,6 @@ export default function BlogPage() {
           </div>
         </div>
       </header>
-
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <motion.div
           initial={{ x: "100%" }}
@@ -118,7 +116,7 @@ export default function BlogPage() {
             </Button>
           </div>
 
-          {/* Mobile Navigation */}
+          
           <div className="flex flex-col items-center justify-center space-y-8 flex-grow text-2xl">
             <ActiveLink href="/" onClick={() => setIsMenuOpen(false)}>Home</ActiveLink>
             <ActiveLink href="/portfolio" onClick={() => setIsMenuOpen(false)}>Portfolio</ActiveLink>
@@ -158,7 +156,7 @@ export default function BlogPage() {
           </motion.div>
         </section>
 
-        {/* Categories */}
+      
         <section className="container mx-auto px-4 mb-12">
           <div className="flex flex-wrap gap-2 justify-center">
             {categories.map((category) => (
@@ -174,7 +172,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-        {/* Blog Posts Grid */}
+        
         <section className="container mx-auto px-4 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post) => (
@@ -225,7 +223,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-        {/* Newsletter Section */}
+        
         <section className="container mx-auto px-4 py-16">
           <div className="bg-card border border-border rounded-2xl p-8 md:p-12 max-w-4xl mx-auto">
             <div className="text-center mb-8">

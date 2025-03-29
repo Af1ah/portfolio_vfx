@@ -39,7 +39,7 @@ export default function ContactPage() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold tracking-tighter">
-            STUDIO<span className="text-primary">.</span>
+            Echomorph FX<span className="text-primary">.</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -227,8 +227,8 @@ export default function ContactPage() {
                     <Mail className="h-6 w-6 text-primary mt-1" />
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
-                      <a href="mailto:hello@studio.com" className="text-muted-foreground hover:text-primary transition-colors">
-                        hello@studio.com
+                      <a href="mailto: echomorph10@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                        echomorph10@gmail.com
                       </a>
                     </div>
                   </div>
@@ -237,8 +237,8 @@ export default function ContactPage() {
                     <Phone className="h-6 w-6 text-primary mt-1" />
                     <div>
                       <h3 className="font-semibold mb-1">Phone</h3>
-                      <a href="tel:+919876543210" className="text-muted-foreground hover:text-primary transition-colors">
-                        +91 98765 43210
+                      <a href="tel:+916238932784" className="text-muted-foreground hover:text-primary transition-colors">
+                        +91 6238932784
                       </a>
                     </div>
                   </div>
@@ -248,9 +248,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-semibold mb-1">Location</h3>
                       <p className="text-muted-foreground">
-                        123 Creative Street<br />
-                        Mumbai, Maharashtra 400001<br />
-                        India
+                        Malappuram,kerala
                       </p>
                     </div>
                   </div>
@@ -266,24 +264,27 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 rounded-full bg-muted hover:bg-primary/10 transition-colors"
+                    aria-label="Follow us on Instagram"
                   >
-                    <Instagram className="h-6 w-6" />
+                    <Instagram className="h-6 w-6" aria-hidden="true" />
                   </a>
                   <a
                     href="https://linkedin.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 rounded-full bg-muted hover:bg-primary/10 transition-colors"
+                    aria-label="Follow us on LinkedIn"
                   >
-                    <Linkedin className="h-6 w-6" />
+                    <Linkedin className="h-6 w-6" aria-hidden="true" />
                   </a>
                   <a
                     href="https://twitter.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 rounded-full bg-muted hover:bg-primary/10 transition-colors"
+                    aria-label="Follow us on Twitter"
                   >
-                    <Twitter className="h-6 w-6" />
+                    <Twitter className="h-6 w-6" aria-hidden="true" />
                   </a>
                 </div>
               </div>
