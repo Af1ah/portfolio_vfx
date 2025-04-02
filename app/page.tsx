@@ -204,7 +204,8 @@ export default function HomePage() {
                 id: 1,
                 title: "Movie Poster Design",
                 category: "Poster Design",
-                image: "/images/demo-poster-1.jpg",
+                featured:true,
+                image: "/images/kannan3.jpeg",
                 fallbackImage: "https://placehold.co/600x800/1a1a1a/ffffff?text=Movie+Poster"
               },
               {
@@ -320,7 +321,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <Link href="/" className="text-2xl font-bold tracking-tighter mb-4 inline-block">
-                kannan<span className="text-primary">.</span>
+                Ecomorph FX<span className="text-primary">.</span>
               </Link>
               <p className="text-muted-foreground">Creating visual stories through poster design and VFX artistry.</p>
             </div>
@@ -366,13 +367,10 @@ export default function HomePage() {
                 </li>
                 <li>
                   <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                    Behance
+                    Twitter
                   </a>
                 </li>
-                <li>
-                  <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                    Dribbble
-                  </a>
+                <li>           
                 </li>
                 <li>
                   <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -386,7 +384,7 @@ export default function HomePage() {
               <h3 className="font-bold mb-4">Contact</h3>
               <address className="not-italic text-muted-foreground">
                 <p>ecomorph10@gmail.com</p>
-                <p>+91 xxxxxxxxxx</p>
+                <p>+91 6238932784</p>
                 <p>Malappuram, Kerala</p>
                 <p>India</p>
               </address>
@@ -394,7 +392,7 @@ export default function HomePage() {
           </div>
 
           <div className="border-t border-border mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} kannan. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Ecomorph FX. All rights reserved.</p>
             <div className="flex space-x-4 mt-4 md:mt-0">
               <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Privacy Policy

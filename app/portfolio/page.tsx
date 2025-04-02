@@ -22,22 +22,22 @@ const projects = [
     id: "2", 
     title: "bussiness", 
     category: "posters", 
-    featured: false,
-    image: "/images/kannan2.jpeg"
+    featured: true,
+    image: "/images/kannan3.jpeg"
   },
   { 
     id: "3", 
     title: "Car Design", 
     category: "design", 
     featured: false,
-    image: "/images/car2.jpg"
+    image: "/placeholder.svg?height=450&width=600"
   },
   { 
     id: "4", 
     title: "Kannan VFX 2", 
     category: "posters", 
     featured: false,
-    image: "/images/sign2.jpeg"
+    image: "/placeholder.svg?height=450&width=600"
   },
   { 
     id: "5", 
@@ -64,7 +64,7 @@ const projects = [
     id: "8", 
     title: "Cybernetic Dreams", 
     category: "vfx", 
-    featured: true,
+    featured: false,
     image: "/placeholder.svg?height=450&width=600"
   },
   { 
