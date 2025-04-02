@@ -48,7 +48,6 @@ export default function ContactPage() {
             <ActiveLink href="/portfolio">Portfolio</ActiveLink>
             <ActiveLink href="/about">About</ActiveLink>
             <ActiveLink href="/contact">Contact</ActiveLink>
-            <ActiveLink href="/blog">Blog</ActiveLink>
           </div>
 
           <div className="flex items-center space-x-4">
