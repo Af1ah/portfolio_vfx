@@ -292,28 +292,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Newsletter Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="bg-card border border-border rounded-2xl p-8 md:p-12">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Stay Updated</h2>
-              <p className="text-muted-foreground">
-                Subscribe to my newsletter for the latest projects, insights, and creative process
-              </p>
-            </div>
-
-            <form className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              />
-              <Button type="submit">Subscribe</Button>
-            </form>
-          </div>
-        </div>
-      </section>
+     
+     
 
       {/* Footer */}
       <footer className="border-t border-border py-12">
@@ -349,11 +329,7 @@ export default function HomePage() {
                     Contact
                   </Link>
                 </li>
-                <li>
-                  <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
-                    Blog
-                  </Link>
-                </li>
+                
               </ul>
             </div>
 
