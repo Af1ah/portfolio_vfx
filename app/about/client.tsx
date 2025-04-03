@@ -3,85 +3,16 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ArrowLeft, Mail, MapPin, Phone, Menu, Moon, Sun, X, Clock } from "lucide-react"
-import { useState } from "react"
-import { useTheme } from "next-themes"
-import ActiveLink from "@/components/active-link"
+import { ArrowLeft, Mail, MapPin, Phone, Clock } from "lucide-react"
+import Header from "@/components/header" // Added Header import
 
 export function AboutClient() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Navigation */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold tracking-tighter" aria-label="Studio Home">
-            Echomorph FX<span className="text-primary">.</span>
-          </Link>
+      <Header /> {/* Use the Header component */}
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            <ActiveLink href="/">Home</ActiveLink>
-            <ActiveLink href="/portfolio">Portfolio</ActiveLink>
-            <ActiveLink href="/about">About</ActiveLink>
-            <ActiveLink href="/contact">Contact</ActiveLink>
-           
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle theme"
-            >
-              <Sun className="h-5 w-5 dark:hidden" aria-hidden="true" />
-              <Moon className="h-5 w-5 hidden dark:block" aria-hidden="true" />
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(true)}
-              aria-label="Open menu"
-            >
-              <Menu className="h-5 w-5" aria-hidden="true" />
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "100%" }}
-          transition={{ type: "spring", damping: 20 }}
-          className="fixed inset-0 z-50 bg-background flex flex-col p-8"
-        >
-          <div className="flex justify-end">
-            <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)} aria-label="Close menu">
-              <X className="h-6 w-6" aria-hidden="true" />
-            </Button>
-          </div>
-
-          {/* Mobile Navigation */}
-          <div className="flex flex-col items-center justify-center space-y-8 flex-grow text-2xl">
-            <ActiveLink href="/" onClick={() => setIsMenuOpen(false)}>Home</ActiveLink>
-            <ActiveLink href="/portfolio" onClick={() => setIsMenuOpen(false)}>Portfolio</ActiveLink>
-            <ActiveLink href="/about" onClick={() => setIsMenuOpen(false)}>About</ActiveLink>
-            <ActiveLink href="/contact" onClick={() => setIsMenuOpen(false)}>Contact</ActiveLink>
-            <ActiveLink href="/blog" onClick={() => setIsMenuOpen(false)}>Blog</ActiveLink>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Main Content */}
-      <div className="pt-20">
+      {/* Main Content - Adjusted padding top */}
+      <div className="pt-20"> {/* Keep pt-20 to account for fixed header height */}
         {/* Back Button */}
         <div className="container mx-auto px-4 mb-8">
           <Button variant="ghost" asChild className="gap-2">

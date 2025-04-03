@@ -5,9 +5,9 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Canvas } from "@react-three/fiber"
 import { Environment, Float, PresentationControls } from "@react-three/drei"
-import { Menu, Moon, Sun, X } from "lucide-react"
+import Header from "@/components/header"
 import { Button } from "@/components/ui/button"
-import { useTheme } from "next-themes"
+// Removed useTheme import
 import AnimatedCursor from "@/components/animated-cursor"
 import Model3D from "@/components/model-3d"
 import ParallaxSection from "@/components/parallax-section"
@@ -47,9 +47,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 }
 
 export default function HomePage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  // Removed isMenuOpen state
   const [isLoading, setIsLoading] = useState(true)
-  const { theme, setTheme } = useTheme()
+  // Removed theme state
   const parallaxRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -67,72 +67,8 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
-      <AnimatedCursor />
-
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold tracking-tighter">
-            Ecomorph FX<span className="text-primary">.</span>
-          </Link>
-
-          {/* Replace the navigation links in the header with ActiveLink */}
-          <div className="hidden md:flex space-x-8">
-            <ActiveLink href="/">Home</ActiveLink>
-            <ActiveLink href="/portfolio">Portfolio</ActiveLink>
-            <ActiveLink href="/about">About</ActiveLink>
-            <ActiveLink href="/contact">Contact</ActiveLink>
-           
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle theme"
-            >
-              <Sun className="h-5 w-5 dark:hidden" />
-              <Moon className="h-5 w-5 hidden dark:block" />
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(true)}
-              aria-label="Open menu"
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "100%" }}
-          transition={{ type: "spring", damping: 20 }}
-          className="fixed inset-0 z-50 bg-background flex flex-col p-8"
-        >
-          <div className="flex justify-end">
-            <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)} aria-label="Close menu">
-              <X className="h-6 w-6" />
-            </Button>
-          </div>
-
-          {/* Replace the mobile menu links with ActiveLink */}
-          <div className="flex flex-col items-center justify-center space-y-8 flex-grow text-2xl">
-            <ActiveLink href="/" onClick={() => setIsMenuOpen(false)}>Home</ActiveLink>
-            <ActiveLink href="/portfolio" onClick={() => setIsMenuOpen(false)}>Portfolio</ActiveLink>
-            <ActiveLink href="/about" onClick={() => setIsMenuOpen(false)}>About</ActiveLink>
-            <ActiveLink href="/contact" onClick={() => setIsMenuOpen(false)}>Contact</ActiveLink>
-            <ActiveLink href="/blog" onClick={() => setIsMenuOpen(false)}>Blog</ActiveLink>
-          </div>
-        </motion.div>
-      )}
+      {/* <AnimatedCursor /> */}
+      <Header />
 
       {/* Hero Section with 3D Background */}
       <section className="min-h-screen relative flex items-center pt-20 pb-10">
