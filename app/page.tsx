@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState, useEffect, Suspense, Component, ReactNode } from "react"
+import { projects } from "@/lib/projects"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Canvas } from "@react-three/fiber"
@@ -135,30 +136,18 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                id: 1,
-                title: "Movie Poster Design",
-                category: "Poster Design",
-                featured:true,
-                image: "/images/kannan3.jpeg",
-                fallbackImage: "https://placehold.co/600x800/1a1a1a/ffffff?text=Movie+Poster"
-              },
-              {
-                id: 2,
-                title: "VFX Showreel",
-                category: "Visual Effects",
-                image: "/images/demo-vfx-1.jpg",
-                fallbackImage: "https://placehold.co/600x800/1a1a1a/ffffff?text=VFX+Showreel"
-              },
-              {
-                id: 3,
-                title: "Brand Campaign",
-                category: "Branding",
-                image: "/images/demo-brand-1.jpg",
-                fallbackImage: "https://placehold.co/600x800/1a1a1a/ffffff?text=Brand+Campaign"
-              }
-            ].map((item) => (
+            {projects
+              .filter(project => project.featured)
+              .sort((a, b) => parseInt(b.id) - parseInt(a.id))
+              .slice(0, 3)
+              .map((project) => ({
+                id: parseInt(project.id),
+                title: project.title,
+                category: project.category,
+                image: project.type === 'image' ? (project.image || "/placeholder.svg?height=450&width=600") : "/placeholder.svg?height=450&width=600",
+                fallbackImage: "https://placehold.co/600x800/1a1a1a/ffffff?text=" + encodeURIComponent(project.title)
+              }))
+              .map((item) => (
               <motion.div
                 key={item.id}
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
@@ -168,9 +157,10 @@ export default function HomePage() {
                   <ImageWithFallback
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                     width={600}
-                    height={800}
+                    height={600}
+                
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">

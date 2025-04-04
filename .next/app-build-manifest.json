@@ -21,21 +21,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/_not-found/page": [
+    "/contact/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/chunks/app/contact/page.js"
     ],
-    "/portfolio/page": [
+    "/contact/loading": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/portfolio/page.css",
-      "static/chunks/app/portfolio/page.js"
-    ],
-    "/portfolio/loading": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/portfolio/loading.js"
+      "static/chunks/app/contact/loading.js"
     ]
   }
 }

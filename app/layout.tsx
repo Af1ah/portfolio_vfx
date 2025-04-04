@@ -1,7 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner"; // Import Toaster
 
 export const metadata: Metadata = {
   title: "Creative Portfolio | VFX & Poster Design",
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
+          <Toaster /> {/* Add Toaster component */}
         </ThemeProvider>
       </body>
     </html>

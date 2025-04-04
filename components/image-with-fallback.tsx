@@ -9,7 +9,7 @@ interface ImageWithFallbackProps {
   alt: string
   className?: string
   width?: number
-  height?: number
+  height?: number,
 }
 
 export default function ImageWithFallback({

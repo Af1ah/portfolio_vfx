@@ -1,340 +1,384 @@
 "use client"
 
-import { useState, useEffect } from "react";
-import Lightbox from "yet-another-react-lightbox";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import CustomYoutubePlayer from "@/components/customYoutubePlayer";
-import "yet-another-react-lightbox/styles.css";
-import AnimatedCursor from "@/components/animated-cursor";
-import PageTransition from "@/components/page-transition";
-import Header from "@/components/header";
-import Filters from "@/components/filters";
-import PortfolioGrid from "@/components/portfolio-grid";
-import CallToAction from "@/components/call-to-action";
+import { motion, AnimatePresence } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { ArrowLeft, Mail, MapPin, Phone, Instagram, Linkedin, Twitter, Loader2, CheckCircle, XCircle } from "lucide-react"
+import { useState } from "react"
+import { toast } from "sonner"
+import Header from "@/components/header"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+import PageTransition from "@/components/page-transition"
+import AnimatedCursor from "@/components/animated-cursor"
 
-// Define Project type
-interface Project {
-  id: string;
-  title: string;
-  category: string;
-  featured?: boolean;
-  type: 'image' | 'youtube';
-  image?: string;
-  videoId?: string;
-}
+export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<null | 'success' | 'error'>(null)
+  const [errorMessage, setErrorMessage] = useState("")
 
-// Sample project data - you can replace with your actual projects
-const projects: Project[] = [
-  { 
-    id: "1", 
-    title: "Cultural Poster", 
-    category: "posters", 
-    featured: true,
-    type: 'image',
-    image: "/images/kannan.png",
-  },
-  { 
-    id: "2", 
-    title: "Business Branding", 
-    category: "posters", 
-    featured: true,
-    type: 'image',
-    image: "/images/kannan3.jpeg",
-  },
-  { 
-    id: "3", 
-    title: "Car Design", 
-    category: "design", 
-    featured: false,
-    type: 'image',
-    image: "/placeholder.svg?height=450&width=600",
-  },
-  { 
-    id: "4", 
-    title: "Kannan VFX 2", 
-    category: "posters", 
-    featured: false,
-    type: 'image',
-    image: "/placeholder.svg?height=450&width=600",
-  },
-  { 
-    id: "5", 
-    title: "Ethereal Landscapes", 
-    category: "vfx", 
-    featured: false,
-    type: 'image',
-    image: "/placeholder.svg?height=450&width=600",
-  },
-  { 
-    id: "6", 
-    title: "Retro Revival", 
-    category: "posters", 
-    featured: false,
-    type: 'image',
-    image: "/placeholder.svg?height=450&width=600",
-  },
-  { 
-    id: "7", 
-    title: "Particle Symphony", 
-    category: "motion", 
-    featured: false,
-    type: 'image',
-    image: "/placeholder.svg?height=450&width=600",
-  },
-  { 
-    id: "8", 
-    title: "Cybernetic Dreams", 
-    category: "vfx", 
-    featured: false,
-    type: 'image',
-    image: "/placeholder.svg?height=450&width=600",
-  },
-  { 
-    id: "9", 
-    title: "Minimal Expressions", 
-    category: "posters", 
-    featured: false,
-    type: 'image',
-    image: "/placeholder.svg?height=450&width=600",
-  },
-  // Example YouTube video project
-  {
-    id: "10",
-    title: "VFX Demo Reel",
-    category: "vfx",
-    featured: true,
-    type: 'youtube',
-    videoId: "KBNey4upFKE" // Clean video ID without parameters
-  },
-  {
-    id: "11",
-    title: "VFX Demo",
-    category: "vfx",
-    featured: true,
-    type: 'youtube',
-    videoId: "AxuJ9VdcSIg" // Clean video ID
-  },
-];
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setSubmitStatus(null)
 
-export default function PortfolioPage() {
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  
-  // Lightbox and modal states
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-  const [videoModalOpen, setVideoModalOpen] = useState(false);
-  const [currentVideoId, setCurrentVideoId] = useState<string | null>(null);
-  const [videoPlayerError, setVideoPlayerError] = useState(false);
-  
-  // Filter projects based on category and search query
-  const filteredProjects = projects.filter((project) => {
-    const matchesCategory = activeFilter === "all" || project.category === activeFilter;
-    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+    try {
+      const response = await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
 
-  // Prepare slides specifically for the image lightbox
-  const imageSlides = filteredProjects
-    .filter(project => project.type === 'image') // 1. Filter for image projects first
-    .map((project) => ({                         // 2. Map only image projects
-      id: project.id, // Keep ID for index calculation
-      src: project.image || "/placeholder.svg?height=450&width=600",
-      title: project.title,
-      description: project.category,
-      // type: 'image', // Optional: Add if SlideImage type strictly requires it
-    }));
-
-  // Find the index within imageSlides for the currently selected project
-  const currentProjectId = filteredProjects[currentMediaIndex]?.id;
-  const imageLightboxIndex = imageSlides.findIndex(slide => slide.id === currentProjectId);
-
-  // Function to handle media navigation
-  const navigateMedia = (direction: 'next' | 'prev') => {
-    if (filteredProjects.length <= 1) return;
-    
-    const increment = direction === 'next' ? 1 : -1;
-    let newIndex = (currentMediaIndex + increment + filteredProjects.length) % filteredProjects.length;
-    const nextItem = filteredProjects[newIndex];
-    
-    setCurrentMediaIndex(newIndex);
-    
-    if (videoModalOpen) {
-      setVideoModalOpen(false);
-    }
-    
-    if (lightboxOpen) {
-      setLightboxOpen(false);
-    }
-    
-    // Small timeout to allow modals to close properly before opening new ones
-    setTimeout(() => {
-      if (nextItem.type === 'youtube' && nextItem.videoId) {
-        setCurrentVideoId(nextItem.videoId);
-        setVideoModalOpen(true);
-      } else if (nextItem.type === 'image') {
-        setLightboxOpen(true);
+      if (response.ok) {
+        toast.success("Message sent successfully!")
+        setSubmitStatus('success')
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        })
+      } else {
+        const errorData = await response.json()
+        const message = errorData.error || "Unknown error occurred"
+        setErrorMessage(message)
+        setSubmitStatus('error')
+        toast.error(`Failed to send message: ${message}`)
       }
-    }, 50);
-  };
-
-  // Function to open image lightbox
-  const openImageLightbox = (index: number) => {
-    setCurrentMediaIndex(index);
-    setLightboxOpen(true);
-  };
-
-  // Function to open video modal
-  const openVideoModal = (videoId: string) => {
-    const projectIndex = filteredProjects.findIndex(p => p.type === 'youtube' && p.videoId === videoId);
-    if (projectIndex !== -1) {
-      setCurrentMediaIndex(projectIndex);
+    } catch (error) {
+      console.error("Submission error:", error)
+      setErrorMessage("Network error occurred while sending the message")
+      setSubmitStatus('error')
+      toast.error("An error occurred while sending the message.")
+    } finally {
+      setIsLoading(false)
     }
-    setCurrentVideoId(videoId);
-    setVideoModalOpen(true);
-    setVideoPlayerError(false);
-  };
+  }
 
-  // Handle lightbox close - reset state
-  const handleLightboxClose = () => {
-    setLightboxOpen(false);
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+    // Reset status when user starts typing again
+    if (submitStatus) setSubmitStatus(null)
+  }
 
-  // Handle video modal close - reset state
-  const handleVideoModalClose = () => {
-    setVideoModalOpen(false);
-    setCurrentVideoId(null);
-    setVideoPlayerError(false);
-  };
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1
+      }
+    }
+  }
 
-  // Handle YouTube player errors
-  const handleVideoError = () => {
-    setVideoPlayerError(true);
-  };
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100 }
+    }
+  }
 
-  // Clean up when component unmounts
-  useEffect(() => {
-    return () => {
-      setLightboxOpen(false);
-      setVideoModalOpen(false);
-    };
-  }, []);
-
+  const statusVariants = {
+    hidden: { opacity: 0, height: 0 },
+    visible: { opacity: 1, height: "auto", transition: { duration: 0.3 } }
+  }
 
   return (
-    <div className="min-h-screen bg-muted/30 text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
+
       <PageTransition>
-        <div className="pt-24">
+        <div className="pt-20">
           <AnimatedCursor />
-          <div className="container mx-auto px-4 mb-12">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">Portfolio</h1>
-              <p className="text-xl text-muted-foreground">
-                Explore my collection of poster designs, VFX work, and motion graphics
+          
+          {/* Back Button */}
+          <motion.div 
+            className="container mx-auto px-4 mb-8"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Button variant="ghost" asChild className="gap-2 hover:bg-primary/10 transition-colors">
+              <Link href="/">
+                <ArrowLeft className="h-4 w-4" />
+                Back to Home
+              </Link>
+            </Button>
+          </motion.div>
+
+          {/* Hero Section */}
+          <section className="container mx-auto px-4 py-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="max-w-4xl mx-auto text-center"
+            >
+              <h1 className="text-4xl md:text-6xl font-bold mb-6">
+                Get in <span className="text-primary">Touch</span>
+              </h1>
+              <p className="text-xl text-muted-foreground mb-8">
+                Let's discuss your next project and bring your vision to life
               </p>
+            </motion.div>
+          </section>
+
+          {/* Contact Section */}
+          <section className="container mx-auto px-4 py-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {/* Contact Form */}
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="bg-card p-8 rounded-lg border border-border shadow-sm"
+              >
+                <motion.h2 variants={itemVariants} className="text-3xl font-bold mb-8">Send a Message</motion.h2>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <motion.div variants={itemVariants} className="space-y-2">
+                    <Label htmlFor="name">Full Name</Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      placeholder="Enter your full name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="transition-all focus:ring-2 focus:ring-primary/30"
+                    />
+                  </motion.div>
+
+                  <motion.div variants={itemVariants} className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="transition-all focus:ring-2 focus:ring-primary/30"
+                    />
+                  </motion.div>
+
+                  <motion.div variants={itemVariants} className="space-y-2">
+                    <Label htmlFor="phone">Phone Number</Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      placeholder="Enter your phone number"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="transition-all focus:ring-2 focus:ring-primary/30"
+                    />
+                  </motion.div>
+
+                  <motion.div variants={itemVariants} className="space-y-2">
+                    <Label htmlFor="subject">Subject</Label>
+                    <Input
+                      id="subject"
+                      name="subject"
+                      placeholder="Enter subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      className="transition-all focus:ring-2 focus:ring-primary/30"
+                    />
+                  </motion.div>
+
+                  <motion.div variants={itemVariants} className="space-y-2">
+                    <Label htmlFor="message">Message</Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      placeholder="Enter your message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      className="min-h-[150px] transition-all focus:ring-2 focus:ring-primary/30"
+                    />
+                  </motion.div>
+
+                  <AnimatePresence>
+                    {submitStatus === 'success' && (
+                      <motion.div
+                        key="success"
+                        variants={statusVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md p-4 flex items-center gap-3"
+                      >
+                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+                        <p className="text-green-800 dark:text-green-200">Message sent successfully! We'll get back to you soon.</p>
+                      </motion.div>
+                    )}
+
+                    {submitStatus === 'error' && (
+                      <motion.div
+                        key="error"
+                        variants={statusVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4 flex items-center gap-3"
+                      >
+                        <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                        <p className="text-red-800 dark:text-red-200">{errorMessage || "Failed to send message. Please try again."}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  <motion.div variants={itemVariants}>
+                    <Button 
+                      type="submit" 
+                      className="w-full transition-all hover:shadow-md" 
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        "Send Message"
+                      )}
+                    </Button>
+                  </motion.div>
+                </form>
+              </motion.div>
+
+              {/* Contact Information */}
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="space-y-8"
+              >
+                {/* Contact Details */}
+                <motion.div
+                  variants={itemVariants}
+                  className="bg-card p-8 rounded-lg border border-border shadow-sm"
+                >
+                  <h2 className="text-3xl font-bold mb-8">Contact Information</h2>
+                  <div className="space-y-6">
+                    <div className="flex items-start gap-4 group">
+                      <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        <Mail className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold mb-1">Email</h3>
+                        <a 
+                          href="mailto:echomorph10@gmail.com" 
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                        >
+                          echomorph10@gmail.com
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 group">
+                      <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        <Phone className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold mb-1">Phone</h3>
+                        <a 
+                          href="tel:+916238932784" 
+                          className="text-muted-foreground hover:text-primary transition-colors" 
+                        >
+                          +91 6238932784
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 group">
+                      <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        <MapPin className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold mb-1">Location</h3>
+                        <p className="text-muted-foreground">
+                          Malappuram, Kerala
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Social Links */}
+                <motion.div
+                  variants={itemVariants}
+                  className="bg-card p-8 rounded-lg border border-border shadow-sm"
+                >
+                  <h2 className="text-3xl font-bold mb-8">Connect With Me</h2>
+                  <div className="flex gap-4">
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-full bg-muted hover:bg-primary/20 hover:text-primary transition-all hover:scale-110"
+                      aria-label="Follow on Instagram"
+                    >
+                      <Instagram className="h-6 w-6" aria-hidden="true" />
+                    </a>
+                    <a
+                      href="https://linkedin.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-full bg-muted hover:bg-primary/20 hover:text-primary transition-all hover:scale-110"
+                      aria-label="Connect on LinkedIn"
+                    >
+                      <Linkedin className="h-6 w-6" aria-hidden="true" />
+                    </a>
+                    <a
+                      href="https://twitter.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-full bg-muted hover:bg-primary/20 hover:text-primary transition-all hover:scale-110"
+                      aria-label="Follow on Twitter"
+                    >
+                      <Twitter className="h-6 w-6" aria-hidden="true" />
+                    </a>
+                  </div>
+                </motion.div>
+
+                {/* Business Hours */}
+                <motion.div
+                  variants={itemVariants}
+                  className="bg-card p-8 rounded-lg border border-border shadow-sm"
+                >
+                  <h2 className="text-3xl font-bold mb-8">Business Hours</h2>
+                  <div className="space-y-2 text-muted-foreground">
+                    <p>Monday - Friday: 10:00 AM - 7:00 PM</p>
+                    <p>Saturday: 11:00 AM - 5:00 PM</p>
+                    <p>Sunday: Closed</p>
+                  </div>
+                </motion.div>
+              </motion.div>
             </div>
-          </div>
-          
-          <Filters
-            activeFilter={activeFilter}
-            setActiveFilter={setActiveFilter}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            isFilterOpen={isFilterOpen}
-            setIsFilterOpen={setIsFilterOpen}
-          />
-          
-          <PortfolioGrid
-            filteredProjects={filteredProjects}
-            onImageClick={openImageLightbox}
-            onVideoClick={openVideoModal}
-          />
-          
-          <CallToAction />
+          </section>
         </div>
       </PageTransition>
-      
-      {/* Image Lightbox without navigation arrows */}
-       <Lightbox
-         open={lightboxOpen}
-         close={handleLightboxClose}
-         slides={imageSlides}
-         index={imageLightboxIndex >= 0 ? imageLightboxIndex : 0}
-         controller={{ closeOnBackdropClick: true }}
-         carousel={{
-           finite: false,
-         }}
-         styles={{
-           container: { backgroundColor: "rgba(0, 0, 0, 0.9)" },
-           slide: { padding: "0 1rem" },
-           icon: { color: "#ffffff" },
-         }}
-         className="[&_.yarl__slide]:flex [&_.yarl__slide]:items-center [&_.yarl__slide]:justify-center [&_.yarl__slide_image_container]:max-w-full [&_.yarl__slide_image_container]:max-h-[80vh] [&_.yarl__slide_image]:object-contain md:[&_.yarl__slide]:p-0 md:[&_.yarl__slide_image_container]:max-h-[90vh]"
-       />
-      
-      {/* YouTube Video Modal */}
-      <Dialog open={videoModalOpen} onOpenChange={handleVideoModalClose}>
-        <DialogContent className="sm:max-w-[900px] bg-black">
-          {videoPlayerError ? (
-            <div className="flex flex-col items-center justify-center p-8 text-white">
-              <p className="text-lg mb-4">Sorry, there was an error loading this video.</p>
-              <button 
-                className="px-4 py-2 bg-primary text-primary-foreground rounded-md"
-                onClick={handleVideoModalClose}
-              >
-                Close
-              </button>
-            </div>
-          ) : (
-            <>
-              {currentVideoId && (
-                <div className="relative aspect-video w-full">
-                  <CustomYoutubePlayer
-                    videoId={currentVideoId}
-                    onError={handleVideoError}
-                  />
-                  
-                  {/* Navigation controls for videos */}
-                  <div className="absolute inset-0 flex items-center justify-between pointer-events-none">
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigateMedia('prev');
-                      }}
-                      className="p-2 bg-black/50 rounded-full pointer-events-auto hover:bg-black/70 transition ml-4"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-6 h-6">
-                        <path fillRule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigateMedia('next');
-                      }}
-                      className="p-2 bg-black/50 rounded-full pointer-events-auto hover:bg-black/70 transition mr-4"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-6 h-6">
-                        <path fillRule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-          
-          {/* Project title and info */}
-          {currentMediaIndex !== -1 && filteredProjects[currentMediaIndex] && (
-            <div className="px-4 py-3 bg-black text-white">
-              <h3 className="text-xl font-semibold">{filteredProjects[currentMediaIndex].title}</h3>
-              <p className="text-sm opacity-75 capitalize">{filteredProjects[currentMediaIndex].category}</p>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
-  );
+  )
 }

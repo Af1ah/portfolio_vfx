@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowLeft, Mail, MapPin, Phone, Instagram, Linkedin, Twitter } from "lucide-react" // Removed Menu, Moon, Sun, X
 import { useState } from "react"
-// Removed useTheme import
-import Header from "@/components/header" // Added Header import
-// Removed unused ActiveLink import
+import { toast } from "sonner" // Import toast for notifications
+import Header from "@/components/header"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { Loader2 } from "lucide-react" // Import loader icon
 
 export default function ContactPage() {
   // Removed isMenuOpen state
@@ -22,11 +22,41 @@ export default function ContactPage() {
     subject: "",
     message: "",
   })
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log(formData)
+    setIsLoading(true)
+
+    try {
+      const response = await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        toast.success("Message sent successfully!")
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        })
+      } else {
+        const errorData = await response.json()
+        toast.error(`Failed to send message: ${errorData.error || "Unknown error"}`)
+      }
+    } catch (error) {
+      console.error("Submission error:", error)
+      toast.error("An error occurred while sending the message.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -143,8 +173,15 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full">
-                  Send Message
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
                 </Button>
               </form>
             </motion.div>
