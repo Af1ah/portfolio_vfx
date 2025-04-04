@@ -835,6 +835,9 @@ video {
 .mt-auto {
   margin-top: auto;
 }
+.ml-4 {
+  margin-left: 1rem;
+}
 .block {
   display: block;
 }
@@ -1503,6 +1506,9 @@ video {
 .bg-transparent {
   background-color: transparent;
 }
+.bg-black\/50 {
+  background-color: rgb(0 0 0 / 0.5);
+}
 .bg-opacity-30 {
   --tw-bg-opacity: 0.3;
 }
@@ -1671,6 +1677,9 @@ video {
 }
 .pt-6 {
   padding-top: 1.5rem;
+}
+.pt-24 {
+  padding-top: 6rem;
 }
 .text-left {
   text-align: left;
@@ -1852,6 +1861,9 @@ video {
 }
 .opacity-90 {
   opacity: 0.9;
+}
+.opacity-75 {
+  opacity: 0.75;
 }
 .mix-blend-difference {
   mix-blend-mode: difference;
@@ -2176,6 +2188,9 @@ html {
 }
 .hover\:bg-secondary\/80:hover {
   background-color: hsl(var(--secondary) / 0.8);
+}
+.hover\:bg-black\/70:hover {
+  background-color: rgb(0 0 0 / 0.7);
 }
 .hover\:text-accent-foreground:hover {
   color: hsl(var(--accent-foreground));
@@ -2888,6 +2903,10 @@ html {
     max-width: 24rem;
   }
 
+  .sm\:max-w-\[900px\] {
+    max-width: 900px;
+  }
+
   .sm\:flex-row {
     flex-direction: row;
   }
@@ -3201,6 +3220,36 @@ html {
 .\[\&_\.recharts-surface\]\:outline-none .recharts-surface {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+.\[\&_\.yarl__slide\]\:flex .yarl slide {
+  display: flex;
+}
+.\[\&_\.yarl__slide\]\:items-center .yarl slide {
+  align-items: center;
+}
+.\[\&_\.yarl__slide\]\:justify-center .yarl slide {
+  justify-content: center;
+}
+@media (min-width: 768px) {
+
+  .md\:\[\&_\.yarl__slide\]\:p-0 .yarl slide {
+    padding: 0px;
+  }
+}
+.\[\&_\.yarl__slide_image\]\:object-contain .yarl slide image {
+  object-fit: contain;
+}
+.\[\&_\.yarl__slide_image_container\]\:max-h-\[80vh\] .yarl slide image container {
+  max-height: 80vh;
+}
+.\[\&_\.yarl__slide_image_container\]\:max-w-full .yarl slide image container {
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+
+  .md\:\[\&_\.yarl__slide_image_container\]\:max-h-\[90vh\] .yarl slide image container {
+    max-height: 90vh;
+  }
 }
 .\[\&_\[cmdk-group-heading\]\]\:px-2 [cmdk-group-heading] {
   padding-left: 0.5rem;

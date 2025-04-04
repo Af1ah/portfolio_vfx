@@ -21,6 +21,17 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
+    "/portfolio/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/portfolio/page.js",
+      "static/css/app/portfolio/page.css"
+    ],
+    "/portfolio/loading": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/portfolio/loading.js"
+    ],
     "/contact/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
