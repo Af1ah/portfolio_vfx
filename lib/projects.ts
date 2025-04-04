@@ -83,10 +83,18 @@ export const projects: Project[] = [
   },
   {
     id: "11",
-    title: "VFX Demo",
+    title: "VFemo",
     category: "vfx",
     featured: true,
     type: 'youtube',
     videoId: "AhDD4c4B9u4"
+  },
+  {
+    id: "12",
+    title: "VFXo",
+    category: "vfx",
+    featured: true,
+    type: 'youtube',
+    videoId: "ilL7RQIYxuQ"
   },
 ];
