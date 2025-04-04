@@ -802,9 +802,6 @@ video {
 .ml-1 {
   margin-left: 0.25rem;
 }
-.ml-4 {
-  margin-left: 1rem;
-}
 .ml-auto {
   margin-left: auto;
 }
@@ -1249,14 +1246,14 @@ video {
 .gap-2 {
   gap: 0.5rem;
 }
+.gap-3 {
+  gap: 0.75rem;
+}
 .gap-4 {
   gap: 1rem;
 }
 .gap-8 {
   gap: 2rem;
-}
-.gap-3 {
-  gap: 0.75rem;
 }
 .space-x-1 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
@@ -1405,6 +1402,10 @@ video {
 .border-destructive\/50 {
   border-color: hsl(var(--destructive) / 0.5);
 }
+.border-green-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(187 247 208 / var(--tw-border-opacity, 1));
+}
 .border-input {
   border-color: hsl(var(--input));
 }
@@ -1418,16 +1419,12 @@ video {
 .border-primary {
   border-color: hsl(var(--primary));
 }
-.border-transparent {
-  border-color: transparent;
-}
-.border-green-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(187 247 208 / var(--tw-border-opacity, 1));
-}
 .border-red-200 {
   --tw-border-opacity: 1;
   border-color: rgb(254 202 202 / var(--tw-border-opacity, 1));
+}
+.border-transparent {
+  border-color: transparent;
 }
 .border-l-transparent {
   border-left-color: transparent;
@@ -1451,9 +1448,6 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
-.bg-black\/50 {
-  background-color: rgb(0 0 0 / 0.5);
-}
 .bg-black\/80 {
   background-color: rgb(0 0 0 / 0.8);
 }
@@ -1469,6 +1463,10 @@ video {
 .bg-foreground {
   background-color: hsl(var(--foreground));
 }
+.bg-green-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 253 244 / var(--tw-bg-opacity, 1));
+}
 .bg-muted {
   background-color: hsl(var(--muted));
 }
@@ -1481,8 +1479,15 @@ video {
 .bg-primary {
   background-color: hsl(var(--primary));
 }
+.bg-primary\/10 {
+  background-color: hsl(var(--primary) / 0.1);
+}
 .bg-primary\/20 {
   background-color: hsl(var(--primary) / 0.2);
+}
+.bg-red-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
 }
 .bg-red-600 {
   --tw-bg-opacity: 1;
@@ -1497,17 +1502,6 @@ video {
 }
 .bg-transparent {
   background-color: transparent;
-}
-.bg-green-50 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(240 253 244 / var(--tw-bg-opacity, 1));
-}
-.bg-primary\/10 {
-  background-color: hsl(var(--primary) / 0.1);
-}
-.bg-red-50 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
 }
 .bg-opacity-30 {
   --tw-bg-opacity: 0.3;
@@ -1669,9 +1663,6 @@ video {
 .pt-20 {
   padding-top: 5rem;
 }
-.pt-24 {
-  padding-top: 6rem;
-}
 .pt-3 {
   padding-top: 0.75rem;
 }
@@ -1798,6 +1789,14 @@ video {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity, 1));
 }
+.text-green-600 {
+  --tw-text-opacity: 1;
+  color: rgb(22 163 74 / var(--tw-text-opacity, 1));
+}
+.text-green-800 {
+  --tw-text-opacity: 1;
+  color: rgb(22 101 52 / var(--tw-text-opacity, 1));
+}
 .text-muted-foreground {
   color: hsl(var(--muted-foreground));
 }
@@ -1811,6 +1810,14 @@ video {
 .text-primary-foreground {
   color: hsl(var(--primary-foreground));
 }
+.text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+}
+.text-red-800 {
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity, 1));
+}
 .text-rose-500 {
   --tw-text-opacity: 1;
   color: rgb(244 63 94 / var(--tw-text-opacity, 1));
@@ -1821,22 +1828,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-.text-green-600 {
-  --tw-text-opacity: 1;
-  color: rgb(22 163 74 / var(--tw-text-opacity, 1));
-}
-.text-green-800 {
-  --tw-text-opacity: 1;
-  color: rgb(22 101 52 / var(--tw-text-opacity, 1));
-}
-.text-red-600 {
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity, 1));
-}
-.text-red-800 {
-  --tw-text-opacity: 1;
-  color: rgb(153 27 27 / var(--tw-text-opacity, 1));
 }
 .underline-offset-4 {
   text-underline-offset: 4px;
@@ -1855,9 +1846,6 @@ video {
 }
 .opacity-70 {
   opacity: 0.7;
-}
-.opacity-75 {
-  opacity: 0.75;
 }
 .opacity-80 {
   opacity: 0.8;
@@ -2144,9 +2132,6 @@ html {
 .hover\:bg-accent:hover {
   background-color: hsl(var(--accent));
 }
-.hover\:bg-black\/70:hover {
-  background-color: rgb(0 0 0 / 0.7);
-}
 .hover\:bg-destructive\/80:hover {
   background-color: hsl(var(--destructive) / 0.8);
 }
@@ -2169,6 +2154,9 @@ html {
 .hover\:bg-primary\/10:hover {
   background-color: hsl(var(--primary) / 0.1);
 }
+.hover\:bg-primary\/20:hover {
+  background-color: hsl(var(--primary) / 0.2);
+}
 .hover\:bg-primary\/80:hover {
   background-color: hsl(var(--primary) / 0.8);
 }
@@ -2188,9 +2176,6 @@ html {
 }
 .hover\:bg-secondary\/80:hover {
   background-color: hsl(var(--secondary) / 0.8);
-}
-.hover\:bg-primary\/20:hover {
-  background-color: hsl(var(--primary) / 0.2);
 }
 .hover\:text-accent-foreground:hover {
   color: hsl(var(--accent-foreground));
@@ -2251,11 +2236,11 @@ html {
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
-.focus\:ring-ring:focus {
-  --tw-ring-color: hsl(var(--ring));
-}
 .focus\:ring-primary\/30:focus {
   --tw-ring-color: hsl(var(--primary) / 0.3);
+}
+.focus\:ring-ring:focus {
+  --tw-ring-color: hsl(var(--ring));
 }
 .focus\:ring-offset-2:focus {
   --tw-ring-offset-width: 2px;
@@ -2899,10 +2884,6 @@ html {
     display: flex;
   }
 
-  .sm\:max-w-\[900px\] {
-    max-width: 900px;
-  }
-
   .sm\:max-w-sm {
     max-width: 24rem;
   }
@@ -3220,36 +3201,6 @@ html {
 .\[\&_\.recharts-surface\]\:outline-none .recharts-surface {
   outline: 2px solid transparent;
   outline-offset: 2px;
-}
-.\[\&_\.yarl__slide\]\:flex .yarl slide {
-  display: flex;
-}
-.\[\&_\.yarl__slide\]\:items-center .yarl slide {
-  align-items: center;
-}
-.\[\&_\.yarl__slide\]\:justify-center .yarl slide {
-  justify-content: center;
-}
-@media (min-width: 768px) {
-
-  .md\:\[\&_\.yarl__slide\]\:p-0 .yarl slide {
-    padding: 0px;
-  }
-}
-.\[\&_\.yarl__slide_image\]\:object-contain .yarl slide image {
-  object-fit: contain;
-}
-.\[\&_\.yarl__slide_image_container\]\:max-h-\[80vh\] .yarl slide image container {
-  max-height: 80vh;
-}
-.\[\&_\.yarl__slide_image_container\]\:max-w-full .yarl slide image container {
-  max-width: 100%;
-}
-@media (min-width: 768px) {
-
-  .md\:\[\&_\.yarl__slide_image_container\]\:max-h-\[90vh\] .yarl slide image container {
-    max-height: 90vh;
-  }
 }
 .\[\&_\[cmdk-group-heading\]\]\:px-2 [cmdk-group-heading] {
   padding-left: 0.5rem;
