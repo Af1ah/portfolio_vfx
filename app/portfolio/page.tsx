@@ -221,41 +221,6 @@ export default function PortfolioPage() {
     };
   }, []);
 
-  // Custom render for lightbox navigation buttons to navigate between all media
-  const renderNavButtons = () => {
-    return {
-      buttonPrev: () => (
-        <button
-          type="button"
-          className="yarl__button"
-          onClick={(e) => {
-            e.stopPropagation();
-            navigateMedia('prev');
-          }}
-          aria-label="Previous"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-            <path fillRule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clipRule="evenodd" />
-          </svg>
-        </button>
-      ),
-      buttonNext: () => (
-        <button
-          type="button"
-          className="yarl__button"
-          onClick={(e) => {
-            e.stopPropagation();
-            navigateMedia('next');
-          }}
-          aria-label="Next"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-            <path fillRule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clipRule="evenodd" />
-          </svg>
-        </button>
-      ),
-    };
-  };
 
   return (
     <div className="min-h-screen bg-muted/30 text-foreground">
@@ -291,15 +256,23 @@ export default function PortfolioPage() {
         </div>
       </PageTransition>
       
-      {/* Image Lightbox with custom navigation buttons */}
-      <Lightbox
-        open={lightboxOpen}
-        close={handleLightboxClose}
-        slides={imageSlides} // Pass the dedicated image slides array
-        index={imageLightboxIndex >= 0 ? imageLightboxIndex : 0} // Use the pre-calculated index
-        controller={{ closeOnBackdropClick: true }}
-        render={renderNavButtons()}
-      />
+      {/* Image Lightbox without navigation arrows */}
+       <Lightbox
+         open={lightboxOpen}
+         close={handleLightboxClose}
+         slides={imageSlides}
+         index={imageLightboxIndex >= 0 ? imageLightboxIndex : 0}
+         controller={{ closeOnBackdropClick: true }}
+         carousel={{
+           finite: false,
+         }}
+         styles={{
+           container: { backgroundColor: "rgba(0, 0, 0, 0.9)" },
+           slide: { padding: "0 1rem" },
+           icon: { color: "#ffffff" },
+         }}
+         className="[&_.yarl__slide]:flex [&_.yarl__slide]:items-center [&_.yarl__slide]:justify-center [&_.yarl__slide_image_container]:max-w-full [&_.yarl__slide_image_container]:max-h-[80vh] [&_.yarl__slide_image]:object-contain md:[&_.yarl__slide]:p-0 md:[&_.yarl__slide_image_container]:max-h-[90vh]"
+       />
       
       {/* YouTube Video Modal */}
       <Dialog open={videoModalOpen} onOpenChange={handleVideoModalClose}>

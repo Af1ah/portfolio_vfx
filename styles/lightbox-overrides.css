@@ -1,0 +1,21 @@
+/* Hide default lightbox navigation buttons */
+.yarl__button_prev,
+.yarl__button_next {
+  display: none !important;
+}
+
+/* Lightbox container styles */
+.yarl__container {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Slide image container */
+.yarl__slide_image_container {
+  max-width: 100% !important;
+  max-height: 90vh !important;
+}
+
+/* Slide image */
+.yarl__slide_image {
+  object-fit: contain !important;
+}
