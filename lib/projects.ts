@@ -79,7 +79,7 @@ export const projects: Project[] = [
     category: "vfx",
     featured: true,
     type: 'youtube',
-    videoId: "KBNey4upFKE"
+    videoId: "AhDD4c4B9u4"
   },
   {
     id: "11",
@@ -87,7 +87,7 @@ export const projects: Project[] = [
     category: "vfx",
     featured: true,
     type: 'youtube',
-    videoId: "AhDD4c4B9u4"
+    videoId: "KBNey4upFKE"
   },
   {
     id: "12",
