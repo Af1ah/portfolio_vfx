@@ -93,7 +93,7 @@ export async function POST(req) {
     // Prepare email options
     const mailOptions = {
       from: `"Portfolio Contact Form" <${process.env.EMAIL_USER}>`,
-      to: 'muhammadaflah23524@gmail.com', // Your receiving email
+      to: 'echomorph10@gmail.com', // Your receiving email
       replyTo: email,
       subject: `Contact Form: ${subject}`,
       text: `
