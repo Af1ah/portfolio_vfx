@@ -97,4 +97,12 @@ export const projects: Project[] = [
     type: 'youtube',
     videoId: "ilL7RQIYxuQ"
   },
+   {
+    id: "13",
+    title: "Vmo Reel",
+    category: "vfx",
+    featured: true,
+    type: 'youtube',
+    videoId: "AhDD4c4B9u4"
+  },
 ];
