@@ -1,6 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/portfolio/page": "app/portfolio/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/api/send/route": "app/api/send/route.js"
-}
