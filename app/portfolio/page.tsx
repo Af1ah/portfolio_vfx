@@ -1,16 +1,42 @@
 "use client"
 
-import { useState, useEffect } from "react";
-import Lightbox from "yet-another-react-lightbox";
+import { useState, useEffect, lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import CustomYoutubePlayer from "@/components/customYoutubePlayer";
+
+// Lazy load heavy components
+const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const CustomYoutubePlayer = dynamic(
+  () => import("@/components/customYoutubePlayer"),
+  { ssr: false }
+);
+
+const AnimatedCursor = dynamic(
+  () => import("@/components/animated-cursor"),
+  { ssr: false }
+);
+
+const PageTransition = dynamic(
+  () => import("@/components/page-transition"),
+  { ssr: false }
+);
+
+const Header = dynamic(() => import("@/components/header"), { ssr: false });
+const Filters = dynamic(() => import("@/components/filters"), { ssr: false });
+const PortfolioGrid = dynamic(
+  () => import("@/components/portfolio-grid"),
+  { ssr: false }
+);
+const CallToAction = dynamic(
+  () => import("@/components/call-to-action"),
+  { ssr: false }
+);
+
 import "yet-another-react-lightbox/styles.css";
-import AnimatedCursor from "@/components/animated-cursor";
-import PageTransition from "@/components/page-transition";
-import Header from "@/components/header";
-import Filters from "@/components/filters";
-import PortfolioGrid from "@/components/portfolio-grid";
-import CallToAction from "@/components/call-to-action";
 
 // Define Project type
 export interface Project {

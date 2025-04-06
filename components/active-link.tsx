@@ -21,7 +21,7 @@ export default function ActiveLink({
   activeClassName = "text-primary font-medium",
   onClick,
 }: ActiveLinkProps) {
-  const pathname = usePathname()
+  const pathname = usePathname() || ""
   const isActive = pathname === href || (href !== "/" && pathname.startsWith(href))
 
   return (
