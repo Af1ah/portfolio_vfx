@@ -67,42 +67,42 @@ export const projects: Project[] =[
   },
   {
     "id": "9",
-    "title": "Ninesevenone Mockups",
+    "title": "movie poster 01",
     "category": "posters",
     "featured": true,
     "type": "image",
-    "image": "https://scuwayhabnbkznreyfhq.supabase.co/storage/v1/object/public/projectimage//ninesevenone%20mokups_posters.jpeg"
+    "image": "https://scuwayhabnbkznreyfhq.supabase.co/storage/v1/object/public/projectimage//MOVIE%20POSTER%2001.png"
   },
-  {
-    id: "10",
-    title: "VFX Demo Reel",
-    category: "vfx",
-    featured: true,
-    type: 'youtube',
-    videoId: "AhDD4c4B9u4"
-  },
-  {
-    id: "11",
-    title: "VFemo",
-    category: "vfx",
-    featured: true,
-    type: 'youtube',
-    videoId: "KBNey4upFKE"
-  },
-  {
-    id: "12",
-    title: "VFXo",
-    category: "vfx",
-    featured: true,
-    type: 'youtube',
-    videoId: "ilL7RQIYxuQ"
-  },
-  {
-    id: "13",
-    title: "Vmo Reel",
-    category: "vfx",
-    featured: true,
-    type: 'youtube',
-    videoId: "AhDD4c4B9u4"
-  }
+  // {
+  //   id: "10",
+  //   title: "VFX Demo Reel",
+  //   category: "vfx",
+  //   featured: true,
+  //   type: 'youtube',
+  //   videoId: "AhDD4c4B9u4"
+  // },
+  // {
+  //   id: "11",
+  //   title: "VFemo",
+  //   category: "vfx",
+  //   featured: true,
+  //   type: 'youtube',
+  //   videoId: "KBNey4upFKE"
+  // },
+  // {
+  //   id: "12",
+  //   title: "VFXo",
+  //   category: "vfx",
+  //   featured: true,
+  //   type: 'youtube',
+  //   videoId: "ilL7RQIYxuQ"
+  // },
+  // {
+  //   id: "13",
+  //   title: "Vmo Reel",
+  //   category: "vfx",
+  //   featured: true,
+  //   type: 'youtube',
+  //   videoId: "AhDD4c4B9u4"
+  // }
 ];

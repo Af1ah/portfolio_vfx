@@ -83,19 +83,17 @@ export default function PortfolioGrid({ filteredProjects, onImageClick, onVideoC
                 <div className="aspect-[4/3] bg-muted overflow-hidden relative"> 
                   {project.type === 'image' && project.image && (
                     <Image
-                      src={project.image}
+                      src={project.image || "/placeholder.svg?height=450&width=600"}
                       alt={project.title}
-                      fill 
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                       priority={index < 3}
-                      onError={() => {
-                        const imgElement = document.getElementById(`project-img-${project.id}`) as HTMLImageElement;
-                        if (imgElement) {
-                          imgElement.src = "/placeholder.svg?height=450&width=600";
-                        }
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "/placeholder.svg?height=450&width=600";
+                        target.onerror = null; // Prevent infinite loop
                       }}
-                      id={`project-img-${project.id}`}
                     />
                   )}
                   {project.type === 'youtube' && project.videoId && (

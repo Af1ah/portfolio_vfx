@@ -9,6 +9,8 @@ import {
   ReactNode,
 } from "react";
 import { projects } from "@/lib/projects";
+
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
@@ -167,18 +169,23 @@ export default function HomePage() {
                   className="group relative overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-shadow"
                 >
                   <Link
-                    href={`/portfolio/project-${item.id}`}
+                    href={`/portfolio`}
                     className="block h-full"
                   >
-                    <div className="aspect-[1/1] bg-muted/50 overflow-hidden">
-                      <ImageWithFallback
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                        width={450}
-                        height={600}
-                        // priority
-                      />
+                    <div className="aspect-[4/3] bg-muted overflow-hidden relative">
+                     <Image
+                       src={item.image}
+                       alt={item.title}
+                       fill
+                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                       className="object-cover transition-transform duration-500 group-hover:scale-110"
+                       priority={item.id <= 3}
+                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                         const target = e.currentTarget;
+                         target.src = "/placeholder.svg?height=450&width=600";
+                         target.onerror = null;
+                       }}
+                     />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 md:p-6">
                       <div className="w-full">
