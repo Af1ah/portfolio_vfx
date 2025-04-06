@@ -21,6 +21,7 @@ export interface Project {
   type: 'image' | 'youtube';
   image?: string;
   videoId?: string;
+  thumbnail?: string;
 }
 
 import { projects } from "@/lib/projects";

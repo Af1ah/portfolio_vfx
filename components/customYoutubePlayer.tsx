@@ -16,16 +16,53 @@ declare global {
 }
 
 export default function YouTubePlayer({ videoId, onReady, onError }: YouTubePlayerProps) {
+  // Handle uncaught promise rejections from YouTube player
+  useEffect(() => {
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      if (event.reason &&
+          typeof event.reason === 'object' &&
+          event.reason.target &&
+          event.reason.target.src &&
+          event.reason.target.src.includes('youtube.com')) {
+        console.error('Uncaught YouTube player promise rejection:', event.reason);
+        if (onError) onError(event.reason);
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+    return () => {
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+    };
+  }, [onError]);
+
   // Clean videoId if it contains full YouTube URL or parameters
   const cleanVideoId = React.useMemo(() => {
+    // Handle regular YouTube URLs
     if (videoId.includes('watch?v=')) {
       return new URL(videoId).searchParams.get('v') || videoId;
     }
+    // Handle youtu.be URLs
     if (videoId.includes('youtu.be/')) {
       return videoId.split('/').pop() || videoId;
     }
+    // Handle Shorts URLs
+    if (videoId.includes('shorts/')) {
+      return videoId.split('shorts/')[1].split('?')[0] || videoId;
+    }
+    // Handle raw Shorts ID (shorts/VIDEO_ID format)
+    if (videoId.startsWith('shorts/')) {
+      return videoId.split('shorts/')[1] || videoId;
+    }
+    // Remove query parameters if present
     return videoId.includes('?') ? videoId.split('?')[0] : videoId;
   }, [videoId]);
+
+  // Generate YouTube thumbnail URL
+  const thumbnailUrl = React.useMemo(() => {
+    const id = cleanVideoId;
+    return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+  }, [cleanVideoId]);
   
   const [loadError, setLoadError] = useState(false);
   const [isApiReady, setIsApiReady] = useState(false);
@@ -34,80 +71,115 @@ export default function YouTubePlayer({ videoId, onReady, onError }: YouTubePlay
   const playerInstanceRef = useRef<any>(null);
   const playerContainerId = `youtube-player-${cleanVideoId}`;
 
-  // Load YouTube API
+  // Load YouTube API with retry logic
   useEffect(() => {
     if (typeof window === 'undefined' || apiLoadAttemptedRef.current) return;
     
     apiLoadAttemptedRef.current = true;
 
     // Check if API is already loaded
-    if (window.YT && window.YT.Player) {
-      setIsApiReady(true);
-      return;
-    }
+    const checkApiReady = () => {
+      if (window.YT && window.YT.Player) {
+        setIsApiReady(true);
+        return true;
+      }
+      return false;
+    };
 
-    // Define callback
+    // Try immediately first
+    if (checkApiReady()) return;
+
+    // Define callback with retry logic
     const originalCallback = window.onYouTubeIframeAPIReady;
     window.onYouTubeIframeAPIReady = () => {
-      setIsApiReady(true);
+      if (!checkApiReady()) {
+        // If not ready after callback, retry after delay
+        setTimeout(checkApiReady, 500);
+        return;
+      }
       if (typeof originalCallback === 'function') {
         originalCallback();
       }
     };
 
-    // Load API script
-    const scriptTag = document.getElementById("youtube-iframe-api");
-    if (!scriptTag) {
+    // Load API script with retry on error
+    const loadScript = (attempt = 1) => {
+      const scriptTag = document.getElementById("youtube-iframe-api");
+      if (scriptTag) return;
+
       const script = document.createElement("script");
       script.id = "youtube-iframe-api";
       script.src = "https://www.youtube.com/iframe_api";
       script.async = true;
       script.onerror = () => {
-        console.error("Failed to load YouTube API");
-        setLoadError(true);
-        if (onError) onError("API load failed");
+        console.error(`Failed to load YouTube API (attempt ${attempt})`);
+        if (attempt < 3) {
+          setTimeout(() => loadScript(attempt + 1), 1000 * attempt);
+        } else {
+          setLoadError(true);
+          if (onError) onError("API load failed after 3 attempts");
+        }
       };
       document.body.appendChild(script);
-    }
+    };
+
+    loadScript();
   }, [onError]);
 
-  // Initialize player when API is ready
+  // Initialize player when API is ready with retry logic
   useEffect(() => {
     if (!isApiReady || !playerRef.current || loadError) return;
 
-    try {
-      // Destroy existing player if there is one
-      if (playerInstanceRef.current && typeof playerInstanceRef.current.destroy === 'function') {
-        playerInstanceRef.current.destroy();
-        playerInstanceRef.current = null;
-      }
+    const initializePlayer = (attempt = 1) => {
+      try {
+        // Destroy existing player if there is one
+        if (playerInstanceRef.current && typeof playerInstanceRef.current.destroy === 'function') {
+          playerInstanceRef.current.destroy();
+          playerInstanceRef.current = null;
+        }
 
-      // Create new player
-      playerInstanceRef.current = new window.YT.Player(playerContainerId, {
-        videoId: cleanVideoId,
-        playerVars: {
-          // Use YouTube's default controls
-          controls: 1,
-          rel: 0,
-          modestbranding: 1,
-          origin: typeof window !== 'undefined' ? window.location.origin : ''
-        },
-        events: {
-          onReady: (event: any) => {
-            if (onReady) onReady();
+        // Create new player
+        playerInstanceRef.current = new window.YT.Player(playerContainerId, {
+          videoId: cleanVideoId,
+          playerVars: {
+            controls: 1,
+            rel: 0,
+            modestbranding: 1,
+            origin: typeof window !== 'undefined' ? window.location.origin : '',
+            enablejsapi: 1
           },
-          onError: (event: any) => {
-            console.error("YouTube player error:", event.data);
-            setLoadError(true);
-            if (onError) onError(event.data);
-          }
-        },
-      });
-    } catch (error) {
-      console.error("Error initializing YouTube player:", error);
-      setLoadError(true);
-      if (onError) onError(error);
-    }
+          events: {
+            onReady: (event: any) => {
+              console.log("YouTube player ready");
+              if (onReady) onReady();
+            },
+            onError: (event: any) => {
+              console.error("YouTube player error:", event.data);
+              if (attempt < 3) {
+                console.log(`Retrying player initialization (attempt ${attempt + 1})`);
+                setTimeout(() => initializePlayer(attempt + 1), 1000 * attempt);
+              } else {
+                setLoadError(true);
+                if (onError) onError(event.data);
+              }
+            },
+            onStateChange: (event: any) => {
+              console.log("Player state changed:", event.data);
+            }
+          },
+        });
+      } catch (error) {
+        console.error("Error initializing YouTube player:", error);
+        if (attempt < 3) {
+          setTimeout(() => initializePlayer(attempt + 1), 1000 * attempt);
+        } else {
+          setLoadError(true);
+          if (onError) onError(error);
+        }
+      }
+    };
+
+    initializePlayer();
 
     // Cleanup on unmount
     return () => {

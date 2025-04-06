@@ -25,14 +25,36 @@ export default function PortfolioGrid({ filteredProjects, onImageClick, onVideoC
   
   // Helper function to get YouTube thumbnail URLs with fallbacks
   const getYoutubeThumbnail = (videoId: string) => {
-    // Clean videoId if it contains parameters
-    const cleanVideoId = videoId.includes('?') ? videoId.split('?')[0] : videoId;
+    // Clean videoId
+    let cleanVideoId = videoId;
+    if (videoId.includes('watch?v=')) {
+      cleanVideoId = new URL(videoId).searchParams.get('v') || videoId;
+    } else if (videoId.includes('youtu.be/')) {
+      cleanVideoId = videoId.split('/').pop() || videoId;
+    } else if (videoId.includes('shorts/')) {
+      cleanVideoId = videoId.split('shorts/')[1].split('?')[0] || videoId;
+    } else if (videoId.startsWith('shorts/')) {
+      cleanVideoId = videoId.split('shorts/')[1] || videoId;
+    } else {
+      cleanVideoId = videoId.includes('?') ? videoId.split('?')[0] : videoId;
+    }
     return `https://img.youtube.com/vi/${cleanVideoId}/maxresdefault.jpg`;
   };
 
   // Fallback thumbnails in order of preference
   const youtubeThumbnailFallbacks = (videoId: string) => {
-    const cleanVideoId = videoId.includes('?') ? videoId.split('?')[0] : videoId;
+    let cleanVideoId = videoId;
+    if (videoId.includes('watch?v=')) {
+      cleanVideoId = new URL(videoId).searchParams.get('v') || videoId;
+    } else if (videoId.includes('youtu.be/')) {
+      cleanVideoId = videoId.split('/').pop() || videoId;
+    } else if (videoId.includes('shorts/')) {
+      cleanVideoId = videoId.split('shorts/')[1].split('?')[0] || videoId;
+    } else if (videoId.startsWith('shorts/')) {
+      cleanVideoId = videoId.split('shorts/')[1] || videoId;
+    } else {
+      cleanVideoId = videoId.includes('?') ? videoId.split('?')[0] : videoId;
+    }
     return [
       `https://img.youtube.com/vi/${cleanVideoId}/maxresdefault.jpg`,
       `https://img.youtube.com/vi/${cleanVideoId}/hqdefault.jpg`,

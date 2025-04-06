@@ -23,6 +23,28 @@ import ParallaxSection from "@/components/parallax-section";
 import CustomLoader from "@/components/custom-loader";
 import ActiveLink from "@/components/active-link";
 import ImageWithFallback from "@/components/image-with-fallback";
+import { PlayCircle } from "lucide-react";
+
+type ImageItem = {
+  id: number;
+  title: string;
+  category: string;
+  type: 'image';
+  image: string;
+  fallbackImage: string;
+};
+
+type VideoItem = {
+  id: number;
+  title: string;
+  category: string;
+  type: 'youtube';
+  videoId: string;
+  image: string;
+  fallbackImage: string;
+};
+
+type PortfolioItem = ImageItem | VideoItem;
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -150,42 +172,72 @@ export default function HomePage() {
               .filter((project) => project.featured)
               .sort((a, b) => parseInt(b.id) - parseInt(a.id))
               .slice(0, 3)
-              .map((project) => ({
-                id: parseInt(project.id),
-                title: project.title,
-                category: project.category,
-                image:
-                  project.type === "image"
-                    ? project.image || "/placeholder.svg?height=450&width=600"
-                    : "/placeholder.svg?height=450&width=600",
-                fallbackImage:
-                  "https://placehold.co/600x800/1a1a1a/ffffff?text=" +
-                  encodeURIComponent(project.title),
-              }))
+              .map((project): PortfolioItem => {
+                if (project.type === 'youtube' && project.videoId) {
+                  return {
+                    id: parseInt(project.id),
+                    title: project.title,
+                    category: project.category,
+                    type: 'youtube',
+                    videoId: project.videoId.replace('shorts/', ''),
+                    image: "/placeholder.svg?height=450&width=600",
+                    fallbackImage: "https://placehold.co/600x800/1a1a1a/ffffff?text=" +
+                      encodeURIComponent(project.title)
+                  };
+                }
+                return {
+                  id: parseInt(project.id),
+                  title: project.title,
+                  category: project.category,
+                  type: 'image',
+                  image: project.image || "/placeholder.svg?height=450&width=600",
+                  fallbackImage: "https://placehold.co/600x800/1a1a1a/ffffff?text=" +
+                    encodeURIComponent(project.title)
+                };
+              })
               .map((item) => (
                 <motion.div
                   key={item.id}
                   whileHover={{ y: -5, transition: { duration: 0.2 } }}
                   className="group relative overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <Link
-                    href={`/portfolio`}
-                    className="block h-full"
-                  >
+                  
                     <div className="aspect-[4/3] bg-muted overflow-hidden relative">
-                     <Image
-                       src={item.image}
-                       alt={item.title}
-                       fill
-                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                       className="object-cover transition-transform duration-500 group-hover:scale-110"
-                       priority={item.id <= 3}
-                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                         const target = e.currentTarget;
-                         target.src = "/placeholder.svg?height=450&width=600";
-                         target.onerror = null;
-                       }}
-                     />
+                     {item.type === 'youtube' ? (
+                       <>
+                         <Image
+                           src={`https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`}
+                           alt={item.title}
+                           fill
+                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                           className="object-cover transition-transform duration-500 group-hover:scale-110"
+                           onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                             const target = e.currentTarget;
+                             target.src = "/placeholder.svg?height=450&width=600";
+                             target.onerror = null;
+                           }}
+                           priority={item.id <= 3}
+                           id={`video-thumb-${item.id}`}
+                         />
+                         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover:bg-opacity-50 transition-all duration-300">
+                           <PlayCircle className="w-16 h-16 text-white opacity-80 group-hover:opacity-100 transform group-hover:scale-110 transition-all duration-300" />
+                         </div>
+                       </>
+                     ) : (
+                       <Image
+                         src={item.image}
+                         alt={item.title}
+                         fill
+                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                         className="object-cover transition-transform duration-500 group-hover:scale-110"
+                         priority={item.id <= 3}
+                         onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                           const target = e.currentTarget;
+                           target.src = "/placeholder.svg?height=450&width=600";
+                           target.onerror = null;
+                         }}
+                       />
+                     )}
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 md:p-6">
                       <div className="w-full">
@@ -204,8 +256,7 @@ export default function HomePage() {
                         </Button>
                       </div>
                     </div>
-                  </Link>
-                </motion.div>
+                  </motion.div>
               ))}
           </div>
 
