@@ -65,6 +65,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.65",
+    "@types/three": "^0.175.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.17",
