@@ -18,16 +18,18 @@ export default function ActiveLink({
   href,
   children,
   className = "",
-  activeClassName = "text-primary font-medium",
+  activeClassName = "active",
   onClick,
 }: ActiveLinkProps) {
-  const pathname = usePathname() || ""
-  const isActive = pathname === href || (href !== "/" && pathname.startsWith(href))
+  const pathname = usePathname()
+
+  // Ensure pathname is not null
+  const isActive = pathname ? pathname === href || (href !== "/" && pathname.startsWith(href)) : false
 
   return (
     <Link
       href={href}
-      className={cn("transition-colors hover:text-primary", isActive ? activeClassName : "", className)}
+      className={`${className} ${isActive ? activeClassName : ""}`}
       onClick={onClick}
     >
       {children}
