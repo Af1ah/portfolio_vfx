@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { PlayCircle } from "lucide-react";
+import OptimizedImage from "./optimized-image";
 
 // Updated Project interface
 interface Project {
@@ -12,6 +13,7 @@ interface Project {
   type: 'image' | 'youtube';
   image?: string;
   videoId?: string;
+  thumbnail?: string;
 }
 
 // Props interface
@@ -104,18 +106,13 @@ export default function PortfolioGrid({ filteredProjects, onImageClick, onVideoC
               <div className="relative overflow-hidden rounded-lg shadow-md">
                 <div className="aspect-[4/3] bg-muted overflow-hidden relative"> 
                   {project.type === 'image' && project.image && (
-                    <Image
+                    <OptimizedImage
                       src={project.image || "/placeholder.svg?height=450&width=600"}
                       alt={project.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      priority={index < 3}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "/placeholder.svg?height=450&width=600";
-                        target.onerror = null; // Prevent infinite loop
-                      }}
+                      width={600}
+                      height={450}
+                      className="transition-transform duration-500 group-hover:scale-110"
+                      placeholderSrc={project.thumbnail}
                     />
                   )}
                   {project.type === 'youtube' && project.videoId && (

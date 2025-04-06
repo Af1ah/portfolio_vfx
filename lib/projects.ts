@@ -8,7 +8,8 @@ export const projects: Project[] =[
     "category": "posters",
     "featured": true,
     "type": "image",
-    "image": "https://scuwayhabnbkznreyfhq.supabase.co/storage/v1/object/public/projectimage//MOVIE%20POSTER%2001.png"
+    "image": "https://scuwayhabnbkznreyfhq.supabase.co/storage/v1/object/public/projectimage//MOVIE%20POSTER%2001.png?width=1200&height=800&format=webp&quality=80",
+    "thumbnail": "https://scuwayhabnbkznreyfhq.supabase.co/storage/v1/object/public/projectimage//MOVIE%20POSTER%2001.png?width=100&height=100&format=webp&quality=30&blur=5"
   },
   {
     id: "10",

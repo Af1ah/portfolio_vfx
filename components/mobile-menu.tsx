@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { X } from "lucide-react"
-import Link from "next/link"
+import ActiveLink from "@/components/active-link"
 
 interface MobileMenuProps {
   isMenuOpen: boolean
@@ -68,26 +68,28 @@ export function MobileMenu({ isMenuOpen, setIsMenuOpen }: MobileMenuProps) {
             variants={itemVariants}
             className="py-4 border-b border-neutral-800/50 last:border-0"
           >
-            <Link
+            <ActiveLink
               href={item.href}
               onClick={() => setIsMenuOpen(false)}
               className="block text-2xl font-medium text-white hover:text-rose-500 transition-colors duration-200"
+              activeClassName="text-rose-500"
             >
               {item.label}
-            </Link>
+            </ActiveLink>
           </motion.div>
         ))}
       </div>
       
       {/* Footer with CTA */}
       <div className="p-6 flex flex-col gap-4 bg-black">
-        <Link
+        <ActiveLink
           href="/contact"
           onClick={() => setIsMenuOpen(false)}
           className="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white text-center rounded-md font-medium transition-colors duration-200"
+          activeClassName="bg-rose-700"
         >
           Get in Touch
-        </Link>
+        </ActiveLink>
         <p className="text-neutral-400 text-sm text-center">
           Creative Visual Storytelling
         </p>

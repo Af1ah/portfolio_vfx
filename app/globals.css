@@ -102,3 +102,22 @@ html {
   @apply bg-primary/30 text-foreground;
 }
 
+/* Active link styles */
+@layer components {
+  .active {
+    @apply text-primary font-medium relative transition-colors duration-200;
+  }
+  
+  .active::after {
+    @apply content-[''] absolute left-0 -bottom-1 w-full h-0.5 bg-primary rounded-full transition-all duration-300;
+  }
+
+  /* Mobile menu active link styles */
+  .dark .active {
+    @apply text-rose-500;
+  }
+
+  .dark .active::after {
+    @apply bg-rose-500;
+  }
+}
